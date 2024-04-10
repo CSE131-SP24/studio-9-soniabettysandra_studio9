@@ -4,13 +4,13 @@ import java.util.LinkedList;
 
 public class Polynomial {
 	
-	private LinkedList<Double> list;
+	private LinkedList<Double> coefficients;
 
 	/**
 	 * Constructs a Polynomial with no terms yet.
 	 */
 	public Polynomial() {
-		//FIXME
+		this.coefficients = new LinkedList<>();
 	}
 
 	
@@ -20,7 +20,7 @@ public class Polynomial {
 	 * @return polynomial with added term
 	 */
 	public void addTerm(double coeff) {
-		//FIXME
+		coefficients.add(coeff);
 	}
 	
 	/*
@@ -29,7 +29,19 @@ public class Polynomial {
 	 * Cx^N + Cx^N-1 + ... + Cx + C
 	 */
 	public String toString() {
-		return ""; //FIXME
+		String result = "";
+		int exp = coefficients.size() - 1;
+		for(double coeff : coefficients){
+			if(exp > 0) {
+				result += coeff + "x^" + exp;
+				
+			}
+			else {
+				result += coeff;
+			}
+			exp--;
+		}
+		return result;
 	}
 	
 	/**
@@ -38,12 +50,26 @@ public class Polynomial {
 	 * @return value of polynomial at that x
 	 */
 	public double evaluate(double x) {
-		return 0;//FIXME
+		double result = 0;
+		int exp = coefficients.size() - 1;
+		for(double d : coefficients) {
+			result += d * Math.pow(x, exp);
+			exp --;
+		}
+		return result;
 	}
 
 	
 	public Polynomial derivative() {
-		return null;//FIXME
+		Polynomial newCoeff = new Polynomial();
+		int exp = coefficients.size() - 1;
+		for(double d : coefficients) {
+			if(exp > 0) {
+				newCoeff.addTerm(d * exp);
+			}
+			exp--;
+		}
+		return newCoeff;
 	}
 	
 
@@ -94,7 +120,7 @@ public class Polynomial {
 		//   against any other LinkedList object by checking
 		//   that the elements in each list agree.
 
-		return this.list.equals(other.list);
+		return this.coefficients.equals(other.coefficients);
 	}
 
 }
